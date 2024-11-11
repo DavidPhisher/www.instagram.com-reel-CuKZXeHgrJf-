@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-import mysql.connector
-from mysql.connector import Error
+import psycopg2
+from psycopg2 import sql, Error
 import os
 
 app = Flask(__name__)
@@ -8,18 +8,20 @@ app = Flask(__name__)
 # Set the secret key to avoid the RuntimeError
 app.secret_key = os.urandom(24)  # This will help avoid session-related issues
 
-# MySQL database connection configuration
+# PostgreSQL database connection configuration
 db_config = {
-    'host': 'localhost',
-    'user': 'root',  # Replace with your MySQL username
-    'password': 'yoSoyPabloEmilioEscobarGaviria1',  # Replace with your MySQL password
-    'database': 'flask_users'  # Your database name
+    'host': 'dpg-csp5tq0gph6c73dvqp4g-a',  # The hostname provided by Render
+    'user': 'yosoypabloemilioescobargaviria1',  # The username provided by Render
+    'password': 'Q2Z15776FGYzPS6UAzRR4hKSn8hKibW5',  # Replace this with the actual password when it's available
+    'database': 'flask_users',  # The name of the database you created
+    'port': 5432,  # Default PostgreSQL port
 }
 
-# Establish connection to MySQL
+# Establish connection to PostgreSQL database
 def get_db_connection():
     try:
-        connection = mysql.connector.connect(**db_config)
+        # Connect to the PostgreSQL database
+        connection = psycopg2.connect(**db_config)
         return connection
     except Error as e:
         print(f"Error: {e}")
