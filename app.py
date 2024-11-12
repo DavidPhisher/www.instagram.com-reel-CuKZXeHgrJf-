@@ -1,11 +1,11 @@
+import os  # Add this import for os module
+
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-import os
 
 app = Flask(__name__)
 
 # Set the secret key for session management
-app.secret_key = 'your_secret_key'  # Replace with a strong secret key
 
 # PostgreSQL database connection configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://yosoypabloemilioescobargaviria1:Q2Z15776FGYzPS6UAzRR4hKSn8hKibW5@dpg-csp5tq0gph6c73dvqp4g-a.oregon-postgres.render.com/flask_users'
@@ -40,5 +40,8 @@ def login():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Default to 5000 if PORT is not set
+    # Get the port from environment variables or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+
+    # Ensure app is bound to 0.0.0.0 for external access
     app.run(host='0.0.0.0', port=port, debug=True)
